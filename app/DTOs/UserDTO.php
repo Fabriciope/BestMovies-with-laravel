@@ -4,7 +4,9 @@ namespace App\DTOs;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Interfaces\DTOInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Http\Testing\File;
 use Illuminate\Support\Facades\Hash;
 
 class UserDTO implements DTOInterface
@@ -33,23 +35,29 @@ class UserDTO implements DTOInterface
     
     public static function makeFromArray(array $data): self
     {
+        $pathPhoto = $data['photo'] ?? null;
+        if($data['photo'] instanceof LengthAwarePaginator || $data['photo'] instanceof File) {
+            $pathPhoto = $data['photo']->hashName();
+        }
+        
         return new self(
             id: $data['id'] ?? null,
             name: $data['name'],
             email: $data['email'],
             password: Hash::make($data['password']),
-            photo: isset($data['photo']) ? $data['photo']->hashName() : null
+            photo: $pathPhoto
         );
     }
 
     public function toArray(): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => $this->password,
-            'photo' => $this->photo,
-        ];
+        $data = [];
+        foreach(get_class_vars(self::class) as $attribute => $value) {
+            if(! is_null($this->{$attribute})){
+                $data[$attribute] = $this->{$attribute};
+            }
+        }
+        
+        return $data;
     }
 }
