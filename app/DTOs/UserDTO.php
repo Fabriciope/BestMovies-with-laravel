@@ -9,23 +9,33 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Testing\File;
 use Illuminate\Support\Facades\Hash;
 
+use function PHPUnit\Framework\isEmpty;
+
 class UserDTO implements DTOInterface
 {
     public function __construct(
         public ?int $id,
-        public string $name,
-        public string $email,
-        public string $password,
+        public ?string $name,
+        public ?string $email,
+        public ?string $password,
         public ?string $photo = null
     ){}
+
+    public function __get(string $name): mixed
+    {
+        return $this->{$name} ?? null;
+    }
 
     /**
      * @var StoreUserRequest $request
      */
-    public static function makeFromRequest(Request $request): self
+    public static function makeFromRequest(Request $request, ?int $userId = null): self|false
     {
+        if(empty($request->name) || empty($request->email) || empty($request->password))
+            return false;
+
         return new self(
-            id: $request->get('id') ?? null,
+            id: $userId ?? $request->get('id'),
             name: $request->name,
             email: $request->email,
             password: Hash::make($request->password),
@@ -33,18 +43,21 @@ class UserDTO implements DTOInterface
         );
     }
     
-    public static function makeFromArray(array $data): self
+    public static function makeFromArray(array $data): self|false
     {
+        // if(empty($data['name']) || empty($data['email']) || empty($data['password']))
+        //     return false;
+
         $pathPhoto = $data['photo'] ?? null;
-        if($data['photo'] instanceof LengthAwarePaginator || $data['photo'] instanceof File) {
+        if($pathPhoto instanceof LengthAwarePaginator || $pathPhoto instanceof File) {
             $pathPhoto = $data['photo']->hashName();
         }
-        
+
         return new self(
             id: $data['id'] ?? null,
-            name: $data['name'],
-            email: $data['email'],
-            password: Hash::make($data['password']),
+            name: $data['name'] ?? null,
+            email: $data['email'] ?? null,
+            password: isset($data['password']) ? Hash::make($data['password']) : null,
             photo: $pathPhoto
         );
     }
