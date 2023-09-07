@@ -18,18 +18,20 @@
             <nav>
                 <ul class="flex space-x-3">
                     <li><a class="py-2 px-4 rounded text-sm font-semibold text-red-700 transition duration-200" href="">Sign in</a></li>
-                    <li><a class="py-2 px-4 rounded text-sm font-semibold text-red-700 border border-red-700 hover:bg-red-600 hover:text-slate-900   transition duration-200" href="">Sign up</a></li>
+                    <li><a href="{{ route('user.register') }}" class="py-2 px-4 rounded text-sm font-semibold text-red-700 border border-red-700 hover:bg-red-600 hover:text-slate-900   transition duration-200">Sign up</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     
-    {{-- @yield('content') --}}
+    <div class="container mx-auto min-h-screen">
+        @yield('content')
+    </div>
 
     <footer>
 
     </footer>
 
     <script src="https://cdn.tailwindcss.com"></script>
-</body>
+</body> 
 </html>

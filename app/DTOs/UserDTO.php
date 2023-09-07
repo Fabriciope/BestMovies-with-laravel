@@ -31,11 +31,11 @@ class UserDTO implements DTOInterface
      */
     public static function makeFromRequest(Request $request, ?int $userId = null): self|false
     {
-        if(empty($request->name) || empty($request->email) || empty($request->password))
-            return false;
+        if(in_array('', [$request->name, $request->email, $request->password]))
+            return false; 
 
         return new self(
-            id: $userId ?? $request->get('id'),
+            id: $request->id ?? $userId,
             name: $request->name,
             email: $request->email,
             password: Hash::make($request->password),

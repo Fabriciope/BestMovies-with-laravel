@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WebController::class, 'home'])
     ->name('home');
+
+Route::middleware('auth')
+    ->group(function(){
+        Route::get('/profile', [ProfileController::class, 'profile'])
+            ->name('profile.index');
+    });
+
+Route::get('/test', function(){
+    Auth::logout();
+});
+
+
+require __DIR__.'/auth.php';
