@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,21 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => ['required', 'email', Rule::exists('users', 'email')],
+            'password' => ['required', 'string'],
         ];
+    }
+
+    public function authenticate(): void
+    {
+        //TODO: implementar o remember
+        if(! Auth::attempt($this->validated())) {
+            $this->flashOnly(['email']);
+            throw ValidationException::withMessages([
+                'error' => 'Invalid credentials'
+            ]);
+        }
+
+        $this->session()->regenerate();
     }
 }
