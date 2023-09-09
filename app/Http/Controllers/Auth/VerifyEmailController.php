@@ -27,9 +27,9 @@ class VerifyEmailController extends Controller
             return redirect()->intended(route('profile.index'));
         }
 
-        $request->user()->sendVerificationEmail();
+        $request->user()->sendEmailVerificationNotification();
 
-        return redirect()
+        return redirect()// TODO: redirecionar com uma flash message 
             ->route('profile.index');
     }
 }
