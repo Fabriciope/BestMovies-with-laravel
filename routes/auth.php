@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,19 @@ Route::middleware('guest')
             ->name('login');
         Route::post('/login/store', [LoginController::class, 'store'])
             ->name('login.store');
+
+
+        Route::get('/forgot-password', [PasswordResetController::class, 'forgotPassword'])
+            ->name('password.forgot');
+        
+        Route::post('/forgot-password', [PasswordResetController::class, 'sendEmail'])
+            ->name('password.email');
+        
+        Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])
+            ->name('password.reset');
+
+        Route::post('/reset-password', [PasswordResetController::class, 'store'])
+            ->name('password.store');
     });
 
 Route::middleware('auth')
@@ -23,6 +37,7 @@ Route::middleware('auth')
         Route::get('/verify-email', [VerifyEmailController::class, 'emailVerificationNotice'])
             ->name('verification.notice');
 
+        /* TODO: quando o usuário clicar no link enviado pelo email ele será direcionado para esta rota, ques está com o middleware "signed". Caso o link esteja com o assinatura inválida, mostrar uma mensagem de "link inválido ou expirado", e dar a possibilidade dele pedir o reenvio do email */
         Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verifyEmail'])
             ->middleware('signed')->name('verification.verify');
 

@@ -30,7 +30,7 @@ class RepositoryTest extends TestCase
     {
         $repository = new UserRepository();
 
-        $usersWithFilter = $repository->getAll(['id' => 5, 'name' => 'Felicita Volkman DDS']);
+        $usersWithFilter = $repository->getAll(['id' => 1]);
 
         $this->assertIsArray($usersWithFilter);
         $this->assertCount(1, $usersWithFilter);

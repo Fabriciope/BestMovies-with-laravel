@@ -19,7 +19,7 @@ class LoginController extends Controller
         $request->authenticate();
 
         return redirect()
-            ->intended(route('profile.index')) // redirecionar com mensagem
-            ->with('success', 'Successful login');
+        ->intended(route('profile.index')) // redirecionar com mensagem
+        ->with('success', 'Successful login');
     }
 }

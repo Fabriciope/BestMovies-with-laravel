@@ -10,6 +10,10 @@ class VerifyEmailController extends Controller
 {
     public function emailVerificationNotice()
     {
+        if(request()->user()->hasVerifiedEmail()) {
+            return back();// redirecionar com mensagem
+        }
+        
         return view('auth.verification-notice');
     }
 

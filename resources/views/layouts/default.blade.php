@@ -21,15 +21,15 @@
                 <ul class="flex space-x-3">
                     @auth
                     <li><a href="{{ route('profile.index') }}"
-                        class="py-2 px-4 rounded text-base font-semibold text-red-700 transition duration-200">profile</a></li>
+                        class="py-2 px-4 rounded-md text-base font-semibold text-red-700 transition duration-200">profile</a></li>
                     @endauth
 
                     @guest
                         <li><a href="{{ route('login') }}"
-                                class="py-2 px-4 rounded text-base font-semibold text-red-700 transition duration-200">Sign
+                                class="py-2 px-4 rounded-md text-base font-semibold text-red-700 transition duration-200">Sign
                                 in</a></li>
                         <li><a href="{{ route('user.register') }}"
-                                class="py-2 px-4 rounded text-base font-semibold text-red-700 border border-red-700 hover:bg-red-600 hover:text-slate-900   transition duration-200">Sign
+                                class="py-2 px-4 rounded-md text-base font-semibold text-red-700 border-2 border-red-700 hover:bg-red-600 hover:text-slate-900 transition duration-200">Sign
                                 up</a></li>
                     @endguest
                 </ul>

@@ -27,4 +27,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // TODO: implementar a função isVerified() para usar no front
 }
