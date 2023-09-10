@@ -22,9 +22,7 @@ class PasswordResetRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'email' => ['required', 'email', Rule::exists('users', 'email')]
-        ];
+        $rules = ['email' => ['required', 'email', Rule::exists('users', 'email')]];
 
         if($this->routeIs('password.store')) {
             $rules['token'] = 'required';

@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-slate-900">
-    <header>
+    <header class="mb-8">
         <div class="container mx-auto px-2 py-4 flex justify-between">
             <div class="w-[130px]">
                 <img class="w-full" src="{{ asset('images/logo-bestmovies.png') }}" alt="logo">
@@ -29,7 +29,7 @@
                                 class="py-2 px-4 rounded-md text-base font-semibold text-red-700 transition duration-200">Sign
                                 in</a></li>
                         <li><a href="{{ route('user.register') }}"
-                                class="py-2 px-4 rounded-md text-base font-semibold text-red-700 border-2 border-red-700 hover:bg-red-600 hover:text-slate-900 transition duration-200">Sign
+                                class="py-2 px-4 rounded-md text-base font-semibold text-red-700 border-2 border-red-700 hover:bg-red-700 hover:text-slate-900 transition duration-200">Sign
                                 up</a></li>
                     @endguest
                 </ul>

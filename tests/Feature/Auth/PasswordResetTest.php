@@ -74,6 +74,34 @@ class PasswordResetTest extends TestCase
                     'email' => $user->email
                 ]);
 
+                $response->assertRedirect(route('login'));
+
+                return true;
+            }
+        );
+    }
+
+    public function test_update_password_with_invalid_email()
+    {
+        Notification::fake();
+
+        $user = \App\Models\User::factory()->create();
+
+        $this->post(route('password.email'), ['email' => $user->email]);
+
+        Notification::assertSentTo(
+            $user, ResetPassword::class,
+            function($notification) use ($user) {
+                $response = $this->post(route('password.store'), [
+                    'token' => $notification->token,
+                    'email' => \App\Models\User::find(3)->email,
+                    'password' => 'newPassword',
+                    'password_confirmation' => 'newPassword',
+                ]);
+
+                $response->assertSessionHasErrors('error');
+                $this->assertDatabaseHas('password_reset_tokens', ['email' => $user->email]);
+
                 return true;
             }
         );

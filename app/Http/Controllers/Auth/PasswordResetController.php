@@ -16,18 +16,19 @@ class PasswordResetController extends Controller
     {
         return view('auth.forgot-password');
     }
-    
+
     public function sendEmail(PasswordResetRequest $request)
     {
+        // TODO: implementar limite de requisições
         // TODO: pensar em passar essa lógica para a camada de serviço
         $status = Password::sendResetLink(
             $request->only(['email'])
         );
-    
+
         return $status === Password::RESET_LINK_SENT
-            ? back()->with('success', 'Link to reset password sent successfully, check your email')
+            ? back()->with('success', __($status))
             : back()->withInput($request->only('email'))
-                    ->withErrors(['error' => 'Error sending password reset link']);
+                    ->withErrors(['error' => __($status)]);
     }
 
     public function reset(string $token)
@@ -38,17 +39,20 @@ class PasswordResetController extends Controller
     public function store(PasswordResetRequest $request)
     {
         $status = Password::reset(
-            $request->validated(),
-            function(User $user) use ($request) {
+            $request->only(['email', 'password', 'password_confirmation', 'token']),
+            function (User $user) use ($request) {
                 $user->forceFill([
                     'password' => Hash::make($request->password),
                     // 'remember_token' => Str::random(60)// Estudar o remember para implementar
                 ])->save();
 
-                // event(new PasswordReset($user))// vincular um listener à esse event e mandar um email de sucesso
+                // event(new PasswordReset($user))// TODO: vincular um listener à esse event e mandar um email de sucesso
             }
         );
 
-        
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('success', __($status))
+            : back()->withInput($request->only('email'))
+                    ->withErrors(['error' => __($status)]);
     }
 }

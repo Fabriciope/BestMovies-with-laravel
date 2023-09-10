@@ -15,7 +15,8 @@ class RegisterUserController extends Controller
 {
     public function __construct(
         private UserService $service
-    ){}
+    ) {
+    }
 
     public function register()
     {

@@ -32,7 +32,6 @@ class LoginRequest extends FormRequest
 
     public function authenticate(): void
     {
-        $this->routeIs()
         //TODO: implementar o remember
         if(! Auth::attempt($this->validated())) {
             // TODO: estudar o rateLimit

@@ -8,7 +8,7 @@
             <x-box-input label="Email:" type="text" name="email" />
             <x-box-input label="Password:" type="password" name="password" />
 
-            <a href="{{ route('user.register') }}"
+            <a href="{{ route('password.forgot') }}"
                 class="text-sky-600 font-normal text-left text-base hover:underline">Forgot password?</a>
 
             <button class="block mx-auto mt-8 py-2 px-8 font-normal text-lg rounded-md text-zinc-200 bg-slate-950/60 hover:bg-slate-950/80 transition duration-150"

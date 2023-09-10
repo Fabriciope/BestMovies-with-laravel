@@ -5,7 +5,7 @@
         id="{{ $name }}" 
         type="{{ $type }}" 
         name="{{ $name }}" 
-        value="{{ old($name) }}">
+        value="{{ $value ?? old($name) }}">
     @error($name)
         <small class="mt-1 ml-1 text-red-600 font-normal text-sm">{{ $message }}</small>   
     @enderror
