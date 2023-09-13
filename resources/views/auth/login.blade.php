@@ -9,7 +9,7 @@
             <x-box-input label="Password:" type="password" name="password" />
 
             <a href="{{ route('password.forgot') }}"
-                class="text-sky-600 font-normal text-left text-base hover:underline">Forgot password?</a>
+                class="text-sky-600 font-normal text-left text-sm hover:underline">Forgot password?</a>
 
             <button class="block mx-auto mt-8 py-2 px-8 font-normal text-lg rounded-md text-zinc-200 bg-slate-950/60 hover:bg-slate-950/80 transition duration-150"
                 type="submit">Login</button>
@@ -17,7 +17,6 @@
             <a href="{{ route('user.register') }}" 
                 class="text-sky-600 block mt-2 font-normal text-right text-base hover:underline">Not registered yet?</a>
         </x-form>
-    </div>
     </div>
 </main> 
 @endsection

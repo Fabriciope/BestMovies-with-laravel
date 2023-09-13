@@ -57,21 +57,20 @@ abstract class AbstractRepository implements RepositoryInterface
         $id = $dto->id ?? null;
         if (!$id) return false;
 
-        if ($model = $this->findOne($id)) {
-            foreach ($dto->toArray() as $field => $value) {
-                $model->{$field} = $value;
-            }
-            if (!$model->save()) return false;
+        if (!$model = $this->findOne($id))
+            return false;
 
-            return $model->refresh();
+        foreach ($dto->toArray() as $field => $value) {
+            $model->{$field} = $value;
         }
+        if (!$model->save()) return false;
 
-        return false;
+        return $model->refresh();
     }
 
     public function delete(string|int $id): void
     {
-        if($model = $this->findOne($id)) 
+        if ($model = $this->findOne($id))
             $model->delete();
     }
 

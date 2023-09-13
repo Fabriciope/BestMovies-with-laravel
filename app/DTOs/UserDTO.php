@@ -4,9 +4,9 @@ namespace App\DTOs;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Interfaces\DTOInterface;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Testing\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 
 use function PHPUnit\Framework\isEmpty;
@@ -14,11 +14,12 @@ use function PHPUnit\Framework\isEmpty;
 class UserDTO implements DTOInterface
 {
     public function __construct(
-        public ?int $id,
-        public ?string $name,
-        public ?string $email,
-        public ?string $password,
-        public ?string $photo = null
+        private ?int $id,
+        private ?string $name,
+        private ?string $email,
+        private ?string $password,
+        private ?string $photo, 
+        private ?string $description
     ){}
 
     public function __get(string $name): mixed
@@ -26,30 +27,30 @@ class UserDTO implements DTOInterface
         return $this->{$name} ?? null;
     }
 
+    public function __set($name, $value): void
+    {
+        $this->{$name} = $value;
+    }
+
     /**
      * @var StoreUserRequest $request
      */
-    public static function makeFromRequest(Request $request, ?int $userId = null): self|false
+    public static function makeFromRequest(Request $request, ?int $userId = null): self
     {
-        if(in_array('', [$request->name, $request->email, $request->password]))
-            return false; 
-
         return new self(
-            id: $request->id ?? $userId,
+            id: $request->user_id ?? $userId,
             name: $request->name,
             email: $request->email,
             password: Hash::make($request->password),
-            photo: $request->hasFile('photo') ? $request->file('photo')->hashName() : null
+            photo: $request->hasFile('photo') ? 'photos/'.$request->file('photo')->hashName() : null,   
+            description: $request->description ?? null
         );
     }
     
-    public static function makeFromArray(array $data): self|false
+    public static function makeFromArray(array $data): self
     {
-        // if(empty($data['name']) || empty($data['email']) || empty($data['password']))
-        //     return false;
-
         $pathPhoto = $data['photo'] ?? null;
-        if($pathPhoto instanceof LengthAwarePaginator || $pathPhoto instanceof File) {
+        if($pathPhoto instanceof UploadedFile || $pathPhoto instanceof File) {
             $pathPhoto = $data['photo']->hashName();
         }
 
@@ -58,7 +59,8 @@ class UserDTO implements DTOInterface
             name: $data['name'] ?? null,
             email: $data['email'] ?? null,
             password: isset($data['password']) ? Hash::make($data['password']) : null,
-            photo: $pathPhoto
+            photo: $pathPhoto,
+            description: $data['description'] ?? null
         );
     }
 

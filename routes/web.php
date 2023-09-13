@@ -20,14 +20,17 @@ Route::get('/', [WebController::class, 'home'])
     ->name('home');
 
 Route::middleware('auth')
-    ->group(function(){
+    ->group(function () {
         Route::get('/profile', [ProfileController::class, 'profile'])
             ->name('profile.index');
+
+        Route::post('/user/update', [ProfileController::class, 'update'])
+            ->name('user.update');
     });
 
-Route::get('/test', function(){
+Route::get('/test', function () {
     Auth::logout();
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

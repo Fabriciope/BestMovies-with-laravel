@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-
     <title>{{ $title ?? 'pegar do .env' }}</title>
 </head>
 
@@ -29,7 +28,7 @@
                                 class="py-2 px-4 rounded-md text-base font-semibold text-red-700 transition duration-200">Sign
                                 in</a></li>
                         <li><a href="{{ route('user.register') }}"
-                                class="py-2 px-4 rounded-md text-base font-semibold text-red-700 border-2 border-red-700 hover:bg-red-700 hover:text-slate-900 transition duration-200">Sign
+                                class="py-2 px-4 rounded-lg text-base font-semibold text-red-700 border-2 border-red-700 hover:bg-red-700 hover:text-slate-900 transition duration-200">Sign
                                 up</a></li>
                     @endguest
                 </ul>
@@ -45,7 +44,11 @@
 
     </footer>
 
+    {{-- Tailwind --}}
     <script src="https://cdn.tailwindcss.com"></script>
+
+    {{-- Font awesome --}}
+    <script src="https://kit.fontawesome.com/d5c56409b7.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

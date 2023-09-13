@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 class DTOTest extends TestCase
 {
-    
+
     //MakeFromRequest
 
     public function test_make_user_dto_from_request()
@@ -27,19 +27,21 @@ class DTOTest extends TestCase
             'email' => 'fabricio@gmail.com',
             'password' => 'password',
         ];
-        $userDTO = UserDTO::makeFromRequest(new RegisterUserRequest(query: $requestData, files: ['photo' => $file]));
-        
+        $userDTO = UserDTO::makeFromRequest(
+            new RegisterUserRequest(query: $requestData, files: ['photo' => $file])
+        );
+
         $this->assertInstanceOf(UserDTO::class, $userDTO);
-        
-        foreach(Arr::collapse([array_keys($requestData), ['photo']]) as $key) {
+
+        foreach (Arr::collapse([array_keys($requestData), ['photo']]) as $key) {
             $this->assertArrayHasKey($key, $userDTO->toArray());
 
-            switch($key) {
+            switch ($key) {
                 case 'password':
                     $this->assertTrue(Hash::check($requestData['password'], $userDTO->password));
                     break;
                 case 'photo':
-                    $this->assertEquals($file->hashName(), $userDTO->photo);
+                    $this->assertEquals('photos/'.$file->hashName(), $userDTO->photo);
                     break;
                 default:
                     $this->assertEquals($requestData[$key], $userDTO->{$key});
@@ -50,7 +52,7 @@ class DTOTest extends TestCase
         $this->assertCount(4, $userDTO->toArray());
     }
 
-    
+
     public function test_make_user_dto_from_request_without_photo()
     {
         $requestData = [
@@ -62,16 +64,16 @@ class DTOTest extends TestCase
         $userDTO = UserDTO::makeFromRequest(new RegisterUserRequest(query: $requestData));
         $this->assertInstanceOf(UserDTO::class, $userDTO);
 
-        foreach($requestData as $key => $value) {
+        foreach ($requestData as $key => $value) {
             $this->assertArrayHasKey($key, $userDTO->toArray());
 
-            if($key == 'password') {
+            if ($key == 'password') {
                 $this->assertTrue(Hash::check($value, $userDTO->password));
                 continue;
             }
             $this->assertEquals($value, $userDTO->$key);
         }
-        
+
         $this->assertNull($userDTO->photo);
         $this->assertCount(3, $userDTO->toArray());
     }
@@ -90,10 +92,10 @@ class DTOTest extends TestCase
         $userDTO = UserDTO::makeFromArray($data);
         $this->assertInstanceOf(UserDTO::class, $userDTO);
 
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $this->assertArrayHasKey($key, $userDTO->toArray());
 
-            switch($key) {
+            switch ($key) {
                 case 'password':
                     $this->assertTrue(Hash::check($data['password'], $userDTO->password));
                     break;

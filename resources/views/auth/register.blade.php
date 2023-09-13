@@ -2,7 +2,7 @@
 
 @section('content')
 <main class="flex justify-center items-center min-w-screen min-h-screen">
-    <div class="w-[400px] p-8 -mt-10 shadow-lg rounded-md bg-slate-800">
+    <div class="w-[400px] p-8 -mt-10 shadow-lg rounded-xl bg-slate-800">
         <h2 class="mb-4 text-center text-xl text-zinc-200 font-semibold">Create new account</h2>
         <x-form route="user.store" method="post" :files="false">
             <x-box-input label="Name:" type="text" name="name" />
