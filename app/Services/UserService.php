@@ -32,16 +32,18 @@ class UserService
     public function updateProfile(UpdateProfileRequest $request): User|bool
     {
         $user = $request->user();
-        if (! is_null($user->photo) && Storage::disk('public')->exists($user->photo)) {
-            Storage::disk('public')->delete($user->photo);
-        }
 
-        $userDTO = UserDTO::makeFromRequest($request, $user->id); 
-        if (!is_null($userDTO->photo)) {
+        $userDTO = UserDTO::makeFromRequest($request, $user->id);
+        
+        if ($request->hasFile('photo')) {
             $userDTO->photo = Storage::disk('public')
-            ->put('photos', $request->file('photo'));
+                                ->put('photos', $request->file('photo'));
+
+            if (!is_null($user->photo) && Storage::disk('public')->exists($user->photo)) {
+                Storage::disk('public')->delete($user->photo);
+            }
         }
 
-        return $this->repository->update($userDTO);
+        return $this->repository->update($userDTO); // exibir mensagem de sucesso
     }
 }
