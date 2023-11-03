@@ -4,6 +4,7 @@ namespace App\DTOs;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Interfaces\DTOInterface;
+use App\Traits\DTO;
 use Illuminate\Http\Request;
 use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
@@ -13,6 +14,8 @@ use function PHPUnit\Framework\isEmpty;
 
 class UserDTO implements DTOInterface
 {
+    use DTO;
+
     public function __construct(
         private ?int $id,
         private ?string $name,
@@ -22,16 +25,6 @@ class UserDTO implements DTOInterface
         private ?string $description
     ){}
 
-    public function __get(string $name): mixed
-    {
-        return $this->{$name} ?? null;
-    }
-
-    public function __set($name, $value): void
-    {
-        $this->{$name} = $value;
-    }
-
     /**
      * @var StoreUserRequest $request
      */
@@ -39,10 +32,10 @@ class UserDTO implements DTOInterface
     {
         return new self(
             id: $request->user_id ?? $userId,
-            name: $request->name,
-            email: $request->email,
+            name: $request->name ?? null,
+            email: $request->email ?? null,
             password: Hash::make($request->password),
-            photo: $request->hasFile('photo') ? 'photos/'.$request->file('photo')->hashName() : null,   
+            photo: $request->hasFile('photo') ? $request->file('photo')->hashName() : null,   
             description: $request->description ?? null
         );
     }
@@ -62,17 +55,5 @@ class UserDTO implements DTOInterface
             photo: $pathPhoto,
             description: $data['description'] ?? null
         );
-    }
-
-    public function toArray(): array
-    {
-        $data = [];
-        foreach(get_class_vars(self::class) as $attribute => $value) {
-            if(! is_null($this->{$attribute})){
-                $data[$attribute] = $this->{$attribute};
-            }
-        }
-        
-        return $data;
     }
 }

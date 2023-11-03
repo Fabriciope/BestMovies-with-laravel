@@ -13,15 +13,15 @@ use Illuminate\Http\UploadedFile;
 class UpdateProfileRequest extends FormRequest
 {
     private CLosure $photoValidator;
-
-    public function __construct()
-    {
-        $this->setPhotoValidator();
-    }
-
+    
     public function authorize(): bool
     {
         return Auth::check();
+    }
+
+    public function prepareForValidation(): void 
+    {
+        $this->setPhotoValidator();
     }
 
     public function rules(): array

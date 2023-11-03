@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,9 @@ Route::middleware('auth')
 
         Route::post('/user/update', [ProfileController::class, 'update'])
             ->name('user.update');
+
+        Route::get('/add-movie', [MovieController::class, 'create'])
+            ->name('movie.create');
     });
 
 Route::get('/test', function () {

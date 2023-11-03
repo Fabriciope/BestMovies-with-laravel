@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\DTOs;
 
 use App\DTOs\UserDTO;
 use App\Http\Requests\Auth\RegisterUserRequest;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class DTOTest extends TestCase
+class UserDTOTest extends TestCase
 {
 
     //MakeFromRequest
@@ -51,7 +51,6 @@ class DTOTest extends TestCase
 
         $this->assertCount(4, $userDTO->toArray());
     }
-
 
     public function test_make_user_dto_from_request_without_photo()
     {

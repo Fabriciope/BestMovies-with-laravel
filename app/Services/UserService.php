@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 // adicionar uma interface para ter os métodos de crud
@@ -31,13 +32,15 @@ class UserService
 
     public function updateProfile(UpdateProfileRequest $request): User|bool
     {
-        $user = $request->user();
+        Storage::fake('public');
 
+        $user = Auth::user();
+        if (is_null($user)) {
+            return false;
+        }
         $userDTO = UserDTO::makeFromRequest($request, $user->id);
-        
         if ($request->hasFile('photo')) {
-            $userDTO->photo = Storage::disk('public')
-                                ->put('photos', $request->file('photo'));
+            $userDTO->photo = Storage::disk('public')->put('photos', $request->file('photo'));
 
             if (!is_null($user->photo) && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);

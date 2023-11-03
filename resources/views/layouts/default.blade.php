@@ -24,7 +24,7 @@
                         </button>
                         <ul id="menu" class="hidden w-[70vw] md:w-[370px] absolute divide-y-2 divide-slate-900 right-0 top-12 rounded-lg shadow-md overflow-hidden bg-slate-700">
                             <li class="w-full">
-                                <a href="{{ route('profile.index') }}"
+                                <a href="{{ route('home') }}"
                                     class="block w-full py-2 font-semibold text-lg text-center text-zinc-400 hover:bg-slate-800/25 transition duration-150">
                                     Home
                                 </a>
@@ -32,11 +32,11 @@
                                     class="block w-full py-2 font-semibold text-lg text-center text-zinc-400 hover:bg-slate-800/25 transition duration-150">
                                     Profile
                                 </a>
-                                <a href="{{ route('profile.index') }}"
+                                <a href="{{ route('home') }}"
                                     class="block w-full py-2 font-semibold text-lg text-center text-zinc-400 hover:bg-slate-800/25 transition duration-150">
                                     My movies
                                 </a>
-                                <a href="{{ route('profile.index') }}"
+                                <a href="{{ route('movie.create') }}"
                                     class="block w-full py-2 font-semibold text-lg text-center text-zinc-400 hover:bg-slate-800/25 transition duration-150">
                                     Add movie
                                 </a>

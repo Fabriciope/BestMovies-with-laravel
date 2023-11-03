@@ -48,8 +48,7 @@ abstract class AbstractRepository implements RepositoryInterface
 
     public function store(DTOInterface $dto): Model
     {
-        return self::getModel()
-            ->create($dto->toArray());
+        return self::getModel()->create($dto->toArray());
     }
 
     public function update(DTOInterface $dto): Model|bool
@@ -57,26 +56,31 @@ abstract class AbstractRepository implements RepositoryInterface
         $id = $dto->id ?? null;
         if (!$id) return false;
 
-        if (!$model = $this->findOne($id))
+        if (!$model = $this->findOne($id)) {
             return false;
+        }
 
         foreach ($dto->toArray() as $field => $value) {
             $model->{$field} = $value;
         }
-        if (!$model->save()) return false;
+
+        if (!$model->save()) {
+            return false;
+        }
 
         return $model->refresh();
     }
 
     public function delete(string|int $id): void
     {
-        if ($model = $this->findOne($id))
+        if ($model = $this->findOne(intval($id)))
             $model->delete();
     }
 
 
     protected static function getModel(): Model
     {
-        return app(static::$model);
+        // return app(static::$model);
+        return new static::$model;
     }
 }

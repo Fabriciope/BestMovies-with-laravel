@@ -14,11 +14,11 @@ class EmailVerificationTest extends TestCase
     public function test_if_email_can_be_verified(): void
     {
         Event::fake();
-        
+
         $user = \App\Models\User::factory()->create([
             'email_verified_at' => null
         ]);
-        
+
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(5),
@@ -35,11 +35,11 @@ class EmailVerificationTest extends TestCase
     public function test_email_is_not_verified_with_invalid_hash()
     {
         Event::fake();
-        
+
         $user = \App\Models\User::factory()->create([
             'email_verified_at' => null
         ]);
-        
+
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(5),

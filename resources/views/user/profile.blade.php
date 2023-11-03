@@ -9,7 +9,7 @@
                 <div>
                     <div class="border rounded-xl border-slate-700 p-5">
                         <div class="w-[180px] h-[180px] mx-auto mb-2 rounded-2xl shadow-md overflow-hidden">
-                            <img src="{{ $user->photo ? asset("storage/{$user->photo}") : asset('images/photo-default.jpg')}}" 
+                            <img src="{{ $user->photo ? asset("storage/{$user->photo}") : asset('assets/images/photo-default.jpg')}}" 
                                 class="w-[100%] h-[100%] object-cover" alt="profile photo default">
                         </div>
                         <x-file-input label="Photo:" name="photo" />
