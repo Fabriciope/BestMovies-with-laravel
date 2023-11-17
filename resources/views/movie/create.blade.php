@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 
-                <x-textarea label="Description:" name="description" />
-                <x-file-input label="Banner:" name="photo" />
+                <x-textarea label="Synopsis:" name="synopsis" />
+                <x-file-input label="Banner:" name="banner" />
                 <x-box-input label="Trailer:" type="text" name="trailer" />
 
                 <button

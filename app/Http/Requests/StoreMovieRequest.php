@@ -2,28 +2,58 @@
 
 namespace App\Http\Requests;
 
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\Rule;
 
 class StoreMovieRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    private Closure $bannerValidator;
+
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
+    public function prepareForValidation(): void
+    {
+        $this->setBannerValidator();
+    }
+
     public function rules(): array
     {
-        // TODO: validar o tamanho do banner
         return [
-            // verificar se o nome do filme ainda não existe
+            'title' => ['required', 'string', 'unique:movies,title'],
+            'synopsis' => ['required', 'string'],
+            'hours' => ['required', 'integer', 'digits_between:0,10'],
+            'minutes' => ['integer', 'digits_between:0,60'],
+            'trailer' => ['string', 'starts_with:https://youtu.be/'],
+            'banner' => [
+                Rule::imageFile()->max(12 * 1024),
+                $this->getBannerValidator()
+            ],
         ];
+    }
+
+    public function getBannerValidator(): Closure
+    {
+        return $this->bannerValidator;
+    }
+
+    public function setBannerValidator(): self
+    {
+        $this->bannerValidator = function (string $attribute, UploadedFile $image, Closure $fail) {
+            [$width, $height] = $image->dimensions();
+
+            $maxWidth = ((85 * $height) / 100); // 132 percent of $height
+            $minHeight = ((132 * $width) / 100); // 132 percent of $width
+
+            if (($width >= $maxWidth) || ($height <= $minHeight)) {
+                $fail("The {$attribute} size is invalid!");
+            }
+        };
+
+        return $this;
     }
 }

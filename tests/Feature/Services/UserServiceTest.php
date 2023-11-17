@@ -39,22 +39,24 @@ class UserServiceTest extends TestCase
 
     public function test_should_be_update_a_user(): void
     {
-        Storage::fake();
+        Storage::fake('public');
 
         $service = new UserService(new UserRepository);
 
         $user = User::factory()->create();
-        $request = new UpdateProfileRequest(query: [
-            'name' => "new name",
-            'description' => $user->description,
-            'photo' => UploadedFile::fake()->image('photo-fake-user.png'),
-        ]);
-        
+        $request = new UpdateProfileRequest(
+            query: [
+                'name' => "new name",
+                'description' => $user->description,
+            ],
+            files: ['photo' => UploadedFile::fake()->image('photo-fake-user.png')]
+        );
+
         $this->actingAs($user);
 
         $user = $service->updateProfile($request);
 
-        Storage::disk('public')->assertExists("photos/{$request->photo}");
+        Storage::disk('public')->assertExists("photos/{$request->get('photo')}");
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals('new name', $user->fresh()->name);
     }

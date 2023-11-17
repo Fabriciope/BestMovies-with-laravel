@@ -12,7 +12,7 @@ use Illuminate\Http\UploadedFile;
 
 class UpdateProfileRequest extends FormRequest
 {
-    private CLosure $photoValidator;
+    private Closure $photoValidator;
     
     public function authorize(): bool
     {
@@ -41,7 +41,7 @@ class UpdateProfileRequest extends FormRequest
         return $this->photoValidator;
     }
 
-    private function setPhotoValidator(): void
+    private function setPhotoValidator(): self
     {
         $this->photoValidator = function (string $attribute, UploadedFile $image, Closure $fail) {
             [$width, $height] = $image->dimensions();
@@ -50,8 +50,10 @@ class UpdateProfileRequest extends FormRequest
             $maxHeight = ((132 * $width) / 100); // 132 percent of $width
 
             if (($width >= $maxWidth) || ($height >= $maxHeight)) {
-                $fail("The {$attribute} is invalid!");
+                $fail("The {$attribute} size is invalid!");
             }
         };
+
+        return $this;
     }
 }

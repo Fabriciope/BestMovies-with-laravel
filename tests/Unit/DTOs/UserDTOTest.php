@@ -41,7 +41,7 @@ class UserDTOTest extends TestCase
                     $this->assertTrue(Hash::check($requestData['password'], $userDTO->password));
                     break;
                 case 'photo':
-                    $this->assertEquals('photos/'.$file->hashName(), $userDTO->photo);
+                    $this->assertEquals($file->hashName(), $userDTO->photo);
                     break;
                 default:
                     $this->assertEquals($requestData[$key], $userDTO->{$key});

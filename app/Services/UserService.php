@@ -32,8 +32,6 @@ class UserService
 
     public function updateProfile(UpdateProfileRequest $request): User|bool
     {
-        Storage::fake('public');
-
         $user = Auth::user();
         if (is_null($user)) {
             return false;
