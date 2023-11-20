@@ -32,7 +32,7 @@
                                     class="block w-full py-2 font-semibold text-lg text-center text-zinc-400 hover:bg-slate-800/25 transition duration-150">
                                     Profile
                                 </a>
-                                <a href="{{ route('home') }}"
+                                <a href="{{ route('profile.dashboard') }}"
                                     class="block w-full py-2 font-semibold text-lg text-center text-zinc-400 hover:bg-slate-800/25 transition duration-150">
                                     My movies
                                 </a>

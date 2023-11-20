@@ -2,6 +2,7 @@
 
 @section('content')
 <main class="flex justify-center items-center min-w-screen min-h-screen">
+    {{-- TODO: colocar botao de sair na navegação --}}
     <div class="px-4 sm:px-12 pb-12 pt-7 mt-6 shadow-lg rounded-md bg-slate-800">
         <h2 class="mb-4 text-center text-xl text-zinc-200 font-semibold">My profile</h2>
         <x-form route="user.update" method="post" :files="true">

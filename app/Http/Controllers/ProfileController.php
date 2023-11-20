@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function profile(Request $request)
     {
         $user = Auth::user();
-
+        
         return view('user.profile', [
             'user' => $user,
             'verifiedEmail' => $user->hasVerifiedEmail()
@@ -33,5 +33,10 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('profile.index'); // redirecionar com sucesso
+    }
+
+    public function dashboard(Request $request)
+    {
+        return view('movie.dashboard');
     }
 }

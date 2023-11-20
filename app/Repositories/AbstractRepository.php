@@ -56,7 +56,8 @@ abstract class AbstractRepository implements RepositoryInterface
         $id = $dto->id ?? null;
         if (!$id) return false;
 
-        if (!$model = $this->findOne($id)) {
+        $model = $this->findOne($id);
+        if (is_null($model)) {
             return false;
         }
 

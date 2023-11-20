@@ -30,7 +30,7 @@ class RepositoryTest extends TestCase
     {
         $repository = new UserRepository();
 
-        $usersWithFilter = $repository->getAll(['id' => 1]);
+        $usersWithFilter = $repository->getAll(['id' => 2]);
 
         $this->assertIsArray($usersWithFilter);
         $this->assertCount(1, $usersWithFilter);
@@ -92,7 +92,7 @@ class RepositoryTest extends TestCase
     public function test_update_an_user()
     {   
         $dto = UserDTO::makeFromArray([
-            'id' => 1,
+            'id' => 2,
             'name' => 'Test2 update',
             'email' => 'testUpdate@gmail.com',
         ]);
@@ -100,6 +100,7 @@ class RepositoryTest extends TestCase
         $repository = new UserRepository();
         $updatedUser = $repository->update($dto);
 
+        $this->assertNotFalse($updatedUser);
         $this->assertModelExists($updatedUser);
         $this->assertEquals($dto->name, $updatedUser->name);
         $this->assertInstanceOf(User::class, $updatedUser);

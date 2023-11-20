@@ -2,44 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMovieRequest;
+use App\Repositories\CategoryRepository;
+use App\Services\MovieService;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct(
+        private MovieService $service
+    ){}
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('movie.create');
+        return view('movie.create', [
+            'categories' => (new CategoryRepository)->getAll(),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store($request)
+    public function store(StoreMovieRequest $request)
     {
+        $createdMovie = $this->service->create($request);
+        if (!$createdMovie) {
+            dd("error create movie");
+            return back();
+                // TODO: redirecionar com flash messages
+        }
+
+        return redirect()
+            ->route('profile.dashboard');
+            //TODO: redirecionar com flashmessages (filme {$createdMovie->title} criado com sucesso)
+
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //

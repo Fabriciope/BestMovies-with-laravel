@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 
 class StoreMovieRequest extends FormRequest
 {
-    private Closure $bannerValidator;
+    private Closure $posterValidator;
 
     public function authorize(): bool
     {
@@ -18,35 +18,37 @@ class StoreMovieRequest extends FormRequest
 
     public function prepareForValidation(): void
     {
-        $this->setBannerValidator();
+        $this->setPosterValidator();
     }
 
     public function rules(): array
     {
         return [
             'title' => ['required', 'string', 'unique:movies,title'],
+            'category_id' => ['required', 'integer'], // TODO: digits_between de quantas categoriaas teem
             'synopsis' => ['required', 'string'],
             'hours' => ['required', 'integer', 'digits_between:0,10'],
             'minutes' => ['integer', 'digits_between:0,60'],
             'trailer' => ['string', 'starts_with:https://youtu.be/'],
-            'banner' => [
+            'poster' => [
+                'required',
                 Rule::imageFile()->max(12 * 1024),
-                $this->getBannerValidator()
+                $this->getPosterValidator()
             ],
         ];
     }
 
-    public function getBannerValidator(): Closure
+    public function getPosterValidator(): Closure
     {
-        return $this->bannerValidator;
+        return $this->posterValidator;
     }
 
-    public function setBannerValidator(): self
+    public function setPosterValidator(): self
     {
-        $this->bannerValidator = function (string $attribute, UploadedFile $image, Closure $fail) {
+        $this->posterValidator = function (string $attribute, UploadedFile $image, Closure $fail) {
             [$width, $height] = $image->dimensions();
 
-            $maxWidth = ((85 * $height) / 100); // 132 percent of $height
+            $maxWidth = ((85 * $height) / 100); // 85 percent of $height
             $minHeight = ((132 * $width) / 100); // 132 percent of $width
 
             if (($width >= $maxWidth) || ($height <= $minHeight)) {

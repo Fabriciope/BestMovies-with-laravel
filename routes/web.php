@@ -30,6 +30,11 @@ Route::middleware('auth')
 
         Route::get('/add-movie', [MovieController::class, 'create'])
             ->name('movie.create');
+        Route::post('/store-movie', [MovieController::class, 'store'])
+            ->name('movie.store');
+        
+        Route::get('/profile/dashboard', [ProfileController::class, 'dashboard'])
+            ->name('profile.dashboard');
     });
 
 Route::get('/test', function () {

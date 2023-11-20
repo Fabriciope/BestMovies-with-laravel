@@ -25,6 +25,10 @@ class MovieService
         }
         $movieDTO->user_id = $user->id;
 
+        if($movieDTO->duration == '0:0') {
+            return false;
+        } 
+
         $movieDTO->poster = Storage::disk('public')->put('posters', $request->file('poster'));
 
         $createdMovie = $this->repository->store($movieDTO);

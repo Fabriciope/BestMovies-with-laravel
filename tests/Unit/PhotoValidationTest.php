@@ -49,7 +49,7 @@ class PhotoValidationTest extends TestCase
     {
         $request = new StoreMovieRequest();
         $request->prepareForValidation();
-        $bannerValidator = $request->getBannerValidator();
+        $bannerValidator = $request->getPosterValidator();
 
         $width = 100;
         $height = 80;
