@@ -19,15 +19,11 @@ class MovieService
     public function create(StoreMovieRequest $request): Movie|bool
     {
         $movieDTO = MovieDTO::makeFromRequest($request);
-        $user = Auth::user();
-        if (is_null($user)) {
+        $movieDTO->user_id = Auth::user()->id;
+        
+        if ($movieDTO->duration == '0:0') {
             return false;
         }
-        $movieDTO->user_id = $user->id;
-
-        if($movieDTO->duration == '0:0') {
-            return false;
-        } 
 
         $movieDTO->poster = Storage::disk('public')->put('posters', $request->file('poster'));
 
@@ -37,5 +33,15 @@ class MovieService
         }
 
         return $createdMovie;
+    }
+    
+    public function delete(string|int $id)
+    {   
+        $this->repository->delete(intval($id));
+    }
+    
+    public function checkIfTheMovieBelongsToTheUser(Movie $movie): bool
+    {
+        return Auth::user()->id == $movie->user_id;
     }
 }

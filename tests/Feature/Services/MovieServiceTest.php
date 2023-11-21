@@ -51,4 +51,15 @@ class MovieServiceTest extends TestCase
         Storage::disk('public')->assertExists($createdMovie->poster);
         $this->assertDatabaseHas('movies', ['title' => $title]);
     }
+    
+    public function test_delete_a_movie()
+    {
+        $movie = Movie::factory()
+            ->for(User::factory()->create())
+            ->create();
+
+        $movieService = (new MovieService(new MovieRepository));
+        $movieService->delete($movie->id);        
+        $this->assertDatabaseMissing('movies', ['id' => $movie->id]);
+    }
 }

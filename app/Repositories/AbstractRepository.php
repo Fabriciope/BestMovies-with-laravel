@@ -74,8 +74,9 @@ abstract class AbstractRepository implements RepositoryInterface
 
     public function delete(string|int $id): void
     {
-        if ($model = $this->findOne(intval($id)))
+        if ($model = $this->findOne(intval($id))) {
             $model->delete();
+        }
     }
 
 

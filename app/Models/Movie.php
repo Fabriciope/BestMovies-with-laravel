@@ -36,4 +36,6 @@ class Movie extends Model
     {
         return $this->hasMany(Assessment::class, 'movie_id', 'id');
     }
+
+    //TODO: criar função para calcular a nota do filme
 }

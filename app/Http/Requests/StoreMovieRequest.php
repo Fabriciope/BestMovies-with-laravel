@@ -29,7 +29,7 @@ class StoreMovieRequest extends FormRequest
             'synopsis' => ['required', 'string'],
             'hours' => ['required', 'integer', 'digits_between:0,10'],
             'minutes' => ['integer', 'digits_between:0,60'],
-            'trailer' => ['string', 'starts_with:https://youtu.be/'],
+            'trailer_link' => ['string', 'starts_with:https://youtu.be/'],
             'poster' => [
                 'required',
                 Rule::imageFile()->max(12 * 1024),

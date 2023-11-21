@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
+use App\Repositories\MovieRepository;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,9 @@ class ProfileController extends Controller
 
     public function dashboard(Request $request)
     {
-        return view('movie.dashboard');
+        $usersMovie = (new MovieRepository)->getAll(['user_id' => $request->user()->id]);
+        return view('movie.dashboard', [
+            'movies' => $usersMovie,
+        ]);
     }
 }

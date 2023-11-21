@@ -18,7 +18,7 @@
                     @if ($verifiedEmail)
                         <div class="flex justify-end mt-3">
                             <div class="flex py-2 px-4 rounded-lg bg-slate-900/40">
-                                <img src="{{ asset('images/verify.png') }}" 
+                                <img src="{{ asset('assets/images/verify.png') }}" 
                                     class="h-full w-5 mr-2"
                                     alt="selo de email verificado">
                                 <span class=" text-zinc-300 text-sm font-semibold">Verified email</span>

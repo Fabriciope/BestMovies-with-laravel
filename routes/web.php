@@ -29,12 +29,18 @@ Route::middleware('auth')
             ->name('user.update');
 
         Route::get('/add-movie', [MovieController::class, 'create'])
+            ->middleware('verified')
             ->name('movie.create');
-        Route::post('/store-movie', [MovieController::class, 'store'])
+            Route::post('/store-movie', [MovieController::class, 'store'])
             ->name('movie.store');
-        
+            
+        // TODO: mostrar mensagem caso o usuário ainda não possua nenhum filme publicado
         Route::get('/profile/dashboard', [ProfileController::class, 'dashboard'])
             ->name('profile.dashboard');
+
+        Route::delete('movie/destroy/{movie}', [MovieController::class, 'destroy'])
+            ->middleware('verified')
+            ->name('movie.destroy');
     });
 
 Route::get('/test', function () {
