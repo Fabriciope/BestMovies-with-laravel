@@ -4,7 +4,7 @@
     <main class="flex justify-center items-center min-w-screen min-h-screen">
         <div class="px-4 sm:px-12 pb-12 pt-7 mt-6 shadow-lg rounded-md bg-slate-800">
             <h2 class="mb-4 text-center text-xl text-zinc-200 font-semibold">Register new movie</h2>
-            <x-form route="movie.store" method="post" :files="true">
+            <x-form :route="route('movie.store')" method="post" :files="true">
 
                 <x-box-input label="Film title:" type="text" name="title" />
 
@@ -16,16 +16,14 @@
                             <div>
                                 <input
                                     class="py-2 px-1 w-[51px] rounded-md text-base font-normal text-zinc-200 border border-slate-700 bg-slate-700/75 focus:shadow transition duration-150 outline-none @error('hours') ring-1 ring-red-600 @endError"
-                                    type="number" name="hours" value="{{ old('hours') ?? 0 }}"
-                                    value="{{ old('hours') }}">
+                                    type="number" name="hours" value="{{ old('hours') ?? 0 }}">
 
                                 <span class="mb-1 ml-1 font-semibold text-zinc-400">Hours and</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <input
                                     class="py-2 px-1 w-[51px] rounded-md text-base font-normal text-zinc-200 border border-slate-700 bg-slate-700/75 focus:shadow transition duration-150 outline-none @error('minutes') ring-1 ring-red-600 @endError"
-                                    type="number" name="minutes" value="{{ old('minutes') ?? 00 }}"
-                                    value="{{ old('minutes') }}">
+                                    type="number" name="minutes" value="{{ old('minutes') ?? 00 }}">
                             </div>
                             <span class="mb-1 ml-1 font-semibold text-zinc-400">Minutes</span>
                         </div>
@@ -62,7 +60,7 @@
 
                 <button
                     class="block mx-auto md:mx-0 md:ml-auto mt-8 py-2 px-8 font-normal text-lg rounded-md text-zinc-200 bg-slate-950/60 hover:bg-slate-950/80 transition duration-150"
-                    type="submit">Create movie</button>
+                    type="submit">Edit movie</button>
             </x-form>
         </div>
     </main>

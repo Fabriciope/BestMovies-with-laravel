@@ -4,7 +4,7 @@
 <main class="flex justify-center items-center min-w-screen min-h-screen">
     <div class="w-[400px] p-8 -mt-10 shadow-lg rounded-md bg-slate-800">
         <h2 class="mb-4 text-center text-xl text-zinc-200 font-semibold">Sign in to your account</h2>
-        <x-form route="password.store" method="post" :files="false">
+        <x-form :route="route('password.store')" method="post" :files="false">
             <x-box-input label="" type="hidden" name="token" :value="$token" />
             <x-box-input label="Email:" type="text" name="email" />
             <x-box-input label="Password:" type="password" name="password" />

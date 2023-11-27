@@ -1,5 +1,5 @@
 <form 
-    action="{{ route($route) }}" 
+    action="{{ $route }}" 
     method="{{$method}}"
     @if ($files) enctype="multipart/form-data" @endif>
     
