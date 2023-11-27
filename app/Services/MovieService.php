@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\DTOs\MovieDTO;
-use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\StoreUpdateMovieRequest;
 use App\Models\Movie;
 use App\Repositories\MovieRepository;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,7 @@ class MovieService
     ) {
     }
 
-    public function create(StoreMovieRequest $request): Movie|bool
+    public function create(StoreUpdateMovieRequest $request): Movie|bool
     {
         $movieDTO = MovieDTO::makeFromRequest($request);
         $movieDTO->user_id = Auth::user()->id;
@@ -38,10 +38,5 @@ class MovieService
     public function delete(string|int $id)
     {   
         $this->repository->delete(intval($id));
-    }
-    
-    public function checkIfTheMovieBelongsToTheUser(Movie $movie): bool
-    {
-        return Auth::user()->id == $movie->user_id;
     }
 }

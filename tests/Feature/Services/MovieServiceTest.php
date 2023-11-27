@@ -5,7 +5,7 @@ namespace Tests\Feature\Services;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
-use \App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\StoreUpdateMovieRequest;
 use App\Models\Movie;
 use App\Models\User;
 use App\Services\MovieService;
@@ -38,7 +38,7 @@ class MovieServiceTest extends TestCase
         ];
 
         $filePoster = UploadedFile::fake()->image('moveBanner-test.png');
-        $request = new StoreMovieRequest(
+        $request = new StoreUpdateMovieRequest(
             query: $data,
             files: ['poster' => $filePoster]
         );

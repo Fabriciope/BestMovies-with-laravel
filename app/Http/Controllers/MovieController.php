@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\StoreUpdateMovieRequest;
 use App\Models\Movie;
 use App\Repositories\CategoryRepository;
 use App\Services\MovieService;
@@ -29,7 +29,7 @@ class MovieController extends Controller
         ]);
     }
 
-    public function store(StoreMovieRequest $request)
+    public function store(StoreUpdateMovieRequest $request)
     {
         $createdMovie = $this->service->create($request);
         if (!$createdMovie) {
@@ -49,28 +49,26 @@ class MovieController extends Controller
         //
     }
 
-    public function edit(string $id)
+    public function edit(Movie $movie)
     {
-        //
+        $this->authorize('belongs-to-the-user', $movie);
+
+        return view('movie.edit', [
+            'movie' => $movie,
+            'categories' => (new CategoryRepository)->getAll(),
+        ]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(StoreUpdateMovieRequest $request, Movie $movie)
     {
-        //
+        $this->authorize('belongs-to-the-user', $movie);
+
+        dd($request->validated());
     }
 
     public function destroy(Movie $movie)
     {
-        if (is_null($movie)) {
-            //TODO: redirecionar com flashMessage;
-            return back();
-        }
-
-        if (!$this->service->checkIfTheMovieBelongsToTheUser($movie)) {
-            //TODO: redirecionar como flashMessage (vc não pode deletar um filme que não registrou - english)
-            dd('vc não pode deletar um filme que não registrou - english');
-            return back();
-        }
+        $this->authorize('belongs-to-the-user', $movie);
 
         $this->service->delete($movie->id);
 

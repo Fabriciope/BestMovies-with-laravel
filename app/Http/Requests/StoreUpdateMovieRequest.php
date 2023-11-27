@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
 
-class StoreMovieRequest extends FormRequest
+class StoreUpdateMovieRequest extends FormRequest
 {
     private Closure $posterValidator;
 
@@ -23,7 +23,7 @@ class StoreMovieRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => ['required', 'string', 'unique:movies,title'],
             'category_id' => ['required', 'integer'], // TODO: digits_between de quantas categoriaas teem
             'synopsis' => ['required', 'string'],
@@ -36,6 +36,13 @@ class StoreMovieRequest extends FormRequest
                 $this->getPosterValidator()
             ],
         ];
+
+        if ($this->method() == 'PUT') {
+            unset($rules['poster'][0]);
+            $rules['title'][2] = Rule::unique('movies', 'title')->ignore($this->movie->id, 'id');
+        }
+
+        return $rules;
     }
 
     public function getPosterValidator(): Closure

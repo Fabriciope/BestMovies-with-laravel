@@ -1,6 +1,6 @@
 <form 
     action="{{ $route }}" 
-    method="{{$method}}"
+    method="post"
     @if ($files) enctype="multipart/form-data" @endif>
     
     @csrf

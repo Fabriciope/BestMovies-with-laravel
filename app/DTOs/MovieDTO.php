@@ -5,6 +5,7 @@ namespace App\DTOs;
 use App\Http\Requests\StoreUserRequest;
 use App\Interfaces\DTOInterface;
 use App\Traits\DTO;
+use Carbon\Cli\Invoker;
 use Illuminate\Http\Request;
 use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
@@ -63,7 +64,7 @@ class MovieDTO implements DTOInterface
 
     public static function resolveTrailer(string $trailer_link): string
     {
-        $embedCode = mb_substr($trailer_link, 16);
+        $embedCode = mb_substr($trailer_link, 17);
         return "https://www.youtube.com/embed/{$embedCode}";
     }
 }

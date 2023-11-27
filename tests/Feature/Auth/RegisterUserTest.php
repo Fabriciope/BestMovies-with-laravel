@@ -13,7 +13,7 @@ class RegisterUserTest extends TestCase
 {
     public function test_if_can_register_a_new_user()
     {
-        $testEmail = 'fabricioalvespa@gmail.com';
+        $testEmail = fake()->safeEmail();
         \App\Models\User::where('email', $testEmail)->delete();
 
         Event::fake();

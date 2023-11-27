@@ -60,7 +60,7 @@
 
                 <button
                     class="block mx-auto md:mx-0 md:ml-auto mt-8 py-2 px-8 font-normal text-lg rounded-md text-zinc-200 bg-slate-950/60 hover:bg-slate-950/80 transition duration-150"
-                    type="submit">Edit movie</button>
+                    type="submit">Create movie</button>
             </x-form>
         </div>
     </main>
