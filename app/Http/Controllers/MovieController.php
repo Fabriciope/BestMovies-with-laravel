@@ -63,7 +63,14 @@ class MovieController extends Controller
     {
         $this->authorize('belongs-to-the-user', $movie);
 
-        dd($request->validated());
+        $updatedMovie = $this->service->update($request, $movie->id);
+        if ($updatedMovie === false) {
+            // TODO: msg - something is wrong
+            return back();
+        }
+
+        // TODO: msg - "updated movie {$updatedMovie->title}"
+        return redirect()->route('profile.dashboard');
     }
 
     public function destroy(Movie $movie)

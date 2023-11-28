@@ -34,7 +34,7 @@ class StoreUpdateMovieRequest extends FormRequest
                 'required',
                 Rule::imageFile()->max(12 * 1024),
                 $this->getPosterValidator()
-            ],
+            ]
         ];
 
         if ($this->method() == 'PUT') {

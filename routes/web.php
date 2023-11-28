@@ -18,25 +18,23 @@ Route::middleware('auth')
         Route::post('/user/update', [ProfileController::class, 'update'])
             ->name('user.update');
 
+        // TODO: mostrar mensagem caso o usuário ainda não possua nenhum filme publicado
+        Route::get('/profile/dashboard', [ProfileController::class, 'dashboard'])
+            ->name('profile.dashboard');
     });
 
 Route::middleware(['auth', 'verified'])
-    ->group(function(){
+    ->group(function () {
         Route::get('/add-movie', [MovieController::class, 'create'])
             ->name('movie.create');
 
         Route::post('/store-movie', [MovieController::class, 'store'])
             ->name('movie.store');
-            
 
-        // TODO: mostrar mensagem caso o usuário ainda não possua nenhum filme publicado
-        Route::get('/profile/dashboard', [ProfileController::class, 'dashboard'])
-            ->name('profile.dashboard');
 
-            
         Route::get('/movie/edit/{movie}', [MovieController::class, 'edit'])
             ->name('movie.edit');
-        
+
         Route::put('/movie/update/{movie}', [MovieController::class, 'update'])
             ->name('movie.update');
 

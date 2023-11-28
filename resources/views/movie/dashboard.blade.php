@@ -7,7 +7,7 @@
     </div>
     <div>
       @if (count($movies) == 0)
-          <h3>You don't have movies registered</h3>
+          <h3>You don't have movies registered yet</h3>
       @else
       <table class="p-3 table-auto w-full rounded-md bg-slate-800 shadow-lg">
           <thead>

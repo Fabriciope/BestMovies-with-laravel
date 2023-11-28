@@ -19,7 +19,7 @@ class MovieFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->word(),
+            'title' => fake()->unique()->word(),
             'category_id' => fake()->numberBetween(1, 5),
             'synopsis' => fake()->text(100),
             'duration' => '2:34',

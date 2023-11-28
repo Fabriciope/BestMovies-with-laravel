@@ -34,6 +34,31 @@ class MovieService
 
         return $createdMovie;
     }
+
+    public function update(StoreUpdateMovieRequest $request, string|int $movieId): Movie|bool
+    {
+        $movie = $this->repository->findOne(intval($movieId));
+        if (is_null($movie)) {
+            return false;
+        }
+
+        $movieDTO = MovieDTO::makeFromRequest($request, intval($movieId));
+
+        if ($request->hasFile('poster')) {
+            $movieDTO->poster = Storage::disk('public')->put('posters', $request->file('poster'));
+
+            if ($movie->poster != null && Storage::disk('public')->exists($movie->poster)) {
+                Storage::disk('public')->delete($movie->poster);
+            }
+        }
+
+        $updatedMovie = $this->repository->update($movieDTO);
+        if (! $updatedMovie instanceof Movie) {
+            return false;
+        }
+
+        return $updatedMovie;
+    }
     
     public function delete(string|int $id)
     {   

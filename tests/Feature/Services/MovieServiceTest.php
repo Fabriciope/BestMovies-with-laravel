@@ -10,6 +10,7 @@ use App\Models\Movie;
 use App\Models\User;
 use App\Services\MovieService;
 use \App\Repositories\MovieRepository;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -50,6 +51,31 @@ class MovieServiceTest extends TestCase
         $this->assertInstanceOf(Movie::class, $createdMovie);
         Storage::disk('public')->assertExists($createdMovie->poster);
         $this->assertDatabaseHas('movies', ['title' => $title]);
+    }
+
+    public function test_update_movie()
+    {
+        Storage::fake('public');
+
+        $movie = Movie::factory()
+        ->for(User::factory()->create())
+        ->create();
+
+        $data = [
+            'title' => fake()->unique()->word(),
+            'synopsis' => 'test new synopsis',
+        ];
+
+        $filePoster = UploadedFile::fake()->image('newPoster-test.png');
+        $request = new StoreUpdateMovieRequest(
+            query: $data,
+            files: ['poster' => $filePoster]
+        );
+
+        $updatedMovie = (new MovieService(new MovieRepository))->update($request, $movie->id);
+
+        $this->assertInstanceOf(Movie::class, $updatedMovie);
+        $this->assertDatabaseHas('movies', Arr::collapse([$data, 'synopsis' => $movie->synopsis]));
     }
     
     public function test_delete_a_movie()

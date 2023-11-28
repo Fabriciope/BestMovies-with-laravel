@@ -17,6 +17,7 @@ class MovieDTO implements DTOInterface
     use DTO;
 
     public function __construct(
+        private ?int $id,
         private ?int $user_id,
         private ?string $title,
         private ?string $synopsis,
@@ -30,15 +31,18 @@ class MovieDTO implements DTOInterface
     /**
      * @var StoreUserRequest $request
      */
-    public static function makeFromRequest(Request $request, ?int $userId = null): self
+    public static function makeFromRequest(Request $request,?int $id = null, ?int $userId = null): self
     {
 
         return new self(
-            user_id: $request->user() ? $request->user()->id : null,
+            id: $id,
+            user_id: $userId ? $userId : $request->user()->id ?? null,
             title: $request->title ?? null,
             synopsis: $request->synopsis,
             category_id: $request->category_id,
-            duration: self::resolveDuration($request->hours, $request->minutes),
+            duration: !is_null($request->hours) || !is_null($request->minutes) 
+                        ? self::resolveDuration($request->hours, $request->minutes)
+                        : null,
             poster: $request->hasFile('poster') ? $request->file('poster')->hashName() : null,
             trailer_link: $request->trailer_link ? self::resolveTrailer($request->trailer_link) : null
         );
@@ -47,6 +51,7 @@ class MovieDTO implements DTOInterface
     public static function makeFromArray(array $data): self
     {
         return new self(
+            id: $data['id'],
             user_id: $data['user_id'],
             title: $data['title'],
             synopsis: $data['synopsis'],

@@ -5,7 +5,7 @@
     {{-- TODO: colocar botao de sair na navegação --}}
     <div class="px-4 sm:px-12 pb-12 pt-7 mt-6 shadow-lg rounded-md bg-slate-800">
         <h2 class="mb-4 text-center text-xl text-zinc-200 font-semibold">My profile</h2>
-        <x-form route="user.update" method="post" :files="true">
+        <x-form :route="route('user.update')" method="post" :files="true">
             <div class="md:flex md:gap-12">
                 <div>
                     <div class="border rounded-xl border-slate-700 p-5">

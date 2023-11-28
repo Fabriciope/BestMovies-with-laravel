@@ -3,7 +3,7 @@
 namespace Tests\Unit\DTOs;
 
 use App\DTOs\MovieDTO;
-use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\StoreUpdateMovieRequest;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -27,7 +27,7 @@ class MovieDTOTest extends TestCase
 
         $filePoster =  UploadedFile::fake()->image('test-poster');
         $dto = MovieDTO::makeFromRequest(
-            new StoreMovieRequest(
+            new StoreUpdateMovieRequest(
                 query: $requestData,
                 files: ['poster' => $filePoster]
             )
