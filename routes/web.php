@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WebController::class, 'home'])
     ->name('home');
 
+Route::get('/movie/{movie}', [MovieController::class, 'show'])
+    ->name('movie.show');
+
 Route::middleware('auth')
     ->group(function () {
         Route::get('/profile', [ProfileController::class, 'profile'])

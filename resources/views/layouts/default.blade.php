@@ -18,7 +18,7 @@
 
             <nav>
                 @auth
-                    <div class="relative w-full">
+                    <div class="relative w-full z-50">
                         <button id="menu_button" class="mr-4 p-2 rounded-md hover:bg-slate-800/75 transition duration-150">
                             <i class="fa-solid fa-bars-staggered text-2xl text-zinc-300"></i>
                         </button>

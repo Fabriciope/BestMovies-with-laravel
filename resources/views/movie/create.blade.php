@@ -2,7 +2,7 @@
 
 @section('content')
     <main class="flex justify-center items-center min-w-screen min-h-screen">
-        <div class="px-4 sm:px-12 pb-12 pt-7 mt-6 shadow-lg rounded-md bg-slate-800">
+        <div class="w-[550px] mx-2 px-4 sm:px-12 pb-12 pt-7 mt-6 shadow-lg rounded-md bg-slate-800">
             <h2 class="mb-4 text-center text-xl text-zinc-200 font-semibold">Register new movie</h2>
             <x-form :route="route('movie.store')" method="post" :files="true">
 

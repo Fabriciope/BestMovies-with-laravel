@@ -17,11 +17,6 @@ class MovieController extends Controller
     ) {
     }
 
-    public function index()
-    {
-        //
-    }
-
     public function create()
     {
         return view('movie.create', [
@@ -44,9 +39,11 @@ class MovieController extends Controller
 
     }
 
-    public function show(string $id)
+    public function show(Movie $movie)
     {
-        //
+        return view('movie.show', [
+            'movie' => $movie
+        ]);
     }
 
     public function edit(Movie $movie)

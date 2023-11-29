@@ -20,7 +20,9 @@
           <tbody>
             @foreach ($movies as $movie)
             <tr>
-              <td class="p-2 text-zinc-300 text-base pl-2">{{ $movie->title }}</td>
+              <td class="p-2 pl-2">
+                <a class="text-zinc-300 text-base hover:underline" href="{{ route('movie.show', $movie->id) }}">{{ $movie->title }}</a>
+              </td>
               <td class="p-2"><i class="star fa-solid fa-star text-yellow-500 text-lg mr-1"></i><span class="text-zinc-300 text-base">Without rate</span></td>
               <td class="p-2 flex space-x-4">
                   <a href="{{ route('movie.edit', $movie->id) }}" class="py-1 px-2 rounded-md shadow-md bg-sky-600 font-bold text-sm text-center text-zinc-200">Edit</a>

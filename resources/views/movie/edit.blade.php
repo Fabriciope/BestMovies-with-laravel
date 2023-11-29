@@ -3,7 +3,7 @@
 @section('content')
     <main class="flex justify-center items-center min-w-screen min-h-screen">
         <div class="w-full lg:flex lg:flex-row lg:justify-center lg:gap-7">
-            <div class="min-w-[500px] max-w-[500px]  px-4 mx-auto mb-5 lg:mx-0  sm:px-12 pb-12 pt-7 mt-6 shadow-lg rounded-md bg-slate-800">
+            <div class="w-[550px]  px-4 mx-auto mb-5 lg:mx-0  sm:px-12 pb-12 pt-7 mt-6 shadow-lg rounded-md bg-slate-800">
                 <h2 class="mb-4 text-center text-xl text-zinc-200 font-semibold">Edit movie - {{ $movie->title }}</h2>
                 <x-form :route="route('movie.update', $movie->id)" method="PUT" :files="true">
 
