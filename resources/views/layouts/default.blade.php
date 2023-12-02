@@ -71,6 +71,7 @@
 
     {{-- Scripts --}}
     <script src="{{ asset('assets/scripts/menu.js') }}"></script>
+    @stack('scripts')
 
     {{-- Tailwind --}}
     <script src="https://cdn.tailwindcss.com"></script>
