@@ -28,5 +28,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('belongs-to-the-user', function (User $user, Movie $movie) {
             return $user->id == $movie->user_id;
         });
+
+        Gate::define('assess', function(User $user, Movie $movie) {
+            return $user->id != $movie->user_id;
+        });
     }
 }

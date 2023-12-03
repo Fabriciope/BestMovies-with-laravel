@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\AssessmentDTO;
+use App\Http\Requests\StoreAssessmentRequest;
 use App\Http\Requests\StoreUpdateMovieRequest;
 use App\Models\Movie;
+use App\Repositories\AssessmentRepository;
 use App\Repositories\CategoryRepository;
 use App\Services\MovieService;
 use Illuminate\Http\Request;
@@ -77,6 +80,20 @@ class MovieController extends Controller
         $this->service->delete($movie->id);
 
         // TODO: mensagem de sucesso;
+        return back();
+    }
+
+    public function storeAssessment(StoreAssessmentRequest $request, string|int $movie_id)
+    {
+        
+        $dto = AssessmentDTO::makeFromRequest($request);
+        $dto->movie_id = $movie_id;
+        $dto->user_id = $request->user()->id;
+        
+        $assessmentRepository = new AssessmentRepository;
+        $assessmentRepository->store($dto);
+
+        //TODO: with flashMessages
         return back();
     }
 }

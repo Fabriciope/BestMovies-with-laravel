@@ -43,6 +43,10 @@ Route::middleware(['auth', 'verified'])
 
         Route::delete('/movie/destroy/{movie}', [MovieController::class, 'destroy'])
             ->name('movie.destroy');
+
+        
+        Route::post('/movie/store-assessment/{movie_id}', [MovieController::class, 'storeAssessment'])
+            ->name('assessment.store');
     });
 
 Route::get('/test', function () {
