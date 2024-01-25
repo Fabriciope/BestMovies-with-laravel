@@ -11,13 +11,22 @@ class WebController extends Controller
 {
     public function home()
     {
-        $moviesByCategory = array();
         $movieRepository = new MovieRepository;
         $movieService = new MovieService($movieRepository);
-        
+
         $categories = (new CategoryRepository)->getAll();
-        foreach ($categories as $category) {
-            $moviesByCategory[$category->category] = $movieRepository->getAll(['category_id' => $category->id]);
+        $moviesByCategory = array();
+        foreach($categories as $category) {
+            $moviesByCategory[$category->category] = [];
+        }
+
+        $movies = $movieRepository->getAllWithRating();
+        foreach ($movies as $movie) {
+            foreach($categories as $category) {
+                if ($movie->category_id == $category->id) {
+                    array_push($moviesByCategory[$category->category], $movie);
+                }
+            }
         }
 
         // TODO: pegar os últimos 20 filmes cadastrados

@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUpdateMovieRequest;
 use App\Models\Movie;
 use App\Repositories\AssessmentRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\MovieRepository;
 use App\Services\MovieService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,10 +43,10 @@ class MovieController extends Controller
 
     }
 
-    public function show(Movie $movie)
+    public function show(int|string $id)
     {
         return view('movie.show', [
-            'movie' => $movie
+            'movie' => (new MovieRepository)->getWithAssessments(['id' => intval($id)])
         ]);
     }
 
@@ -83,15 +84,15 @@ class MovieController extends Controller
         return back();
     }
 
-    public function storeAssessment(StoreAssessmentRequest $request, string|int $movie_id)
+    public function storeAssessment(StoreAssessmentRequest $request, Movie $movie)
     {
+        $this->authorize('assess', $movie);
         
         $dto = AssessmentDTO::makeFromRequest($request);
-        $dto->movie_id = $movie_id;
+        $dto->movie_id = $movie->id;
         $dto->user_id = $request->user()->id;
         
-        $assessmentRepository = new AssessmentRepository;
-        $assessmentRepository->store($dto);
+        (new AssessmentRepository)->store($dto);
 
         //TODO: with flashMessages
         return back();

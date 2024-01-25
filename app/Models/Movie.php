@@ -52,6 +52,4 @@ class Movie extends Model
         $code = mb_substr($this->trailer_link, 30);
         return "https://youtu.be/{$code}";
     }
-
-    //TODO: criar função para calcular a nota do filme
 }

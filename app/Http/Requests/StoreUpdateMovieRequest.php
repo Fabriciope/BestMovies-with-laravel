@@ -27,8 +27,8 @@ class StoreUpdateMovieRequest extends FormRequest
             'title' => ['required', 'string', 'unique:movies,title'],
             'category_id' => ['required', 'integer'], // TODO: digits_between de quantas categoriaas teem
             'synopsis' => ['required', 'string'],
-            'hours' => ['required', 'integer', 'digits_between:0,10'],
-            'minutes' => ['integer', 'digits_between:0,60'],
+            'hours' => ['required', 'integer', 'between:0,10'],
+            'minutes' => ['integer', 'between:0,60'],
             'trailer_link' => ['string', 'starts_with:https://youtu.be/'],
             'poster' => [
                 'required',

@@ -23,7 +23,7 @@ class StoreAssessmentRequest extends FormRequest
     {
         return [
             'comment' => ['required', 'string', 'max:200'],
-            'rating' => ['required', 'integer', 'digits_between:0,10']
+            'rating' => ['required', 'integer', 'between:0,10']
         ];
     }
 }

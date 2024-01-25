@@ -11,14 +11,16 @@ class AssessmentTest extends TestCase
 {
     public function test_create_new_assessment()
     {
-        $user = User::factory()->create();
-        $movie = Movie::factory()->create(['user_id' => $user->id]);
-        $this->actingAs($user);
+        
+        $userMovie = User::factory()->create(['email_verified_at' => fake()->dateTime('now')]);
+        $movie = Movie::factory()->create(['user_id' => $userMovie->id]);
         $data = [
             'comment' => fake()->text(100),
             'rating' => fake()->numberBetween(0, 10),
         ];
-
+        
+        $user = User::factory()->create(['email_verified_at' => fake()->dateTime('now')]);
+        $this->actingAs($user);
         $response = $this->post(route('assessment.store', $movie->id), $data);
 
         $response->assertSessionHasNoErrors();

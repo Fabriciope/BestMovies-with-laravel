@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\StoreUpdateMovieRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\UploadedFile;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +47,7 @@ class PhotoValidationTest extends TestCase
 
     public function test_validate_incorrect_banner_size()
     {
-        $request = new StoreMovieRequest();
+        $request = new StoreUpdateMovieRequest();
         $request->prepareForValidation();
         $bannerValidator = $request->getPosterValidator();
 

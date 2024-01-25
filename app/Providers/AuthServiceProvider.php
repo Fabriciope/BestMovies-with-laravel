@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\Assessment;
 use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -30,7 +31,10 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('assess', function(User $user, Movie $movie) {
-            return $user->id != $movie->user_id;
+            $assessmentsCount = Assessment::where('movie_id', $movie->id)
+                                            ->where('user_id', $user->id)
+                                            ->count();
+            return $user->id != $movie->user_id && $assessmentsCount == 0;
         });
     }
 }

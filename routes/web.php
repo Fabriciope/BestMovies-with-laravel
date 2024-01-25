@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WebController::class, 'home'])
     ->name('home');
 
-Route::get('/movie/{movie}', [MovieController::class, 'show'])
+Route::get('/movie/{id}', [MovieController::class, 'show'])
     ->name('movie.show');
 
 Route::middleware('auth')
@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified'])
             ->name('movie.destroy');
 
         
-        Route::post('/movie/store-assessment/{movie_id}', [MovieController::class, 'storeAssessment'])
+        Route::post('/movie/store-assessment/{movie}', [MovieController::class, 'storeAssessment'])
             ->name('assessment.store');
     });
 

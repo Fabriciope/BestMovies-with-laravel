@@ -24,7 +24,12 @@
                                     <div class="w-full h-full flex flex-col justify-end"
                                         style="background: rgb(0,0,0);background: linear-gradient(0deg, rgba(0,0,0, .93) 3%, rgba(53,53,53, 0) 100%, rgba(255,255,255, 0) 100%);">
 
-                                        <div class="w-full p-4">
+                                        <div class="w-full p-4">    
+                                            <div class="flex justify-end">
+                                                <i class="fa-solid fa-star text-yellow-500 text-lg mr-1"></i>
+                                                <span class="text-md text-zinc-100 font-bold">{{ $movie->rating  }}</span>
+                                            </div>
+                                            <h3 class="text-zinc-200 text-lg font-bold text-center mb-3">{{ $movie->title }}</h3>
                                             <a class="w-full block py-1 text-red-700 drop-shadow-[10px] text-lg text-center font-bold rounded-md border-2 border-red-700 bg-red-700/20"
                                                 href="{{ route('movie.show', $movie->id) }}">See more</a>
                                         </div>

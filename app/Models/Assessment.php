@@ -19,11 +19,11 @@ class Assessment extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user', 'user_Id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function movie(): BelongsTo
     {
-        return $this->belongsTo(Movie::class, 'id', 'movie_id');
+        return $this->belongsTo(Movie::class, 'movie_id', 'id');
     }
 }
