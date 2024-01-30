@@ -19,8 +19,6 @@ class PasswordResetController extends Controller
 
     public function sendEmail(PasswordResetRequest $request)
     {
-        // TODO: implementar limite de requisições
-        // TODO: pensar em passar essa lógica para a camada de serviço
         $status = Password::sendResetLink(
             $request->only(['email'])
         );
@@ -43,10 +41,7 @@ class PasswordResetController extends Controller
             function (User $user) use ($request) {
                 $user->forceFill([
                     'password' => Hash::make($request->password),
-                    // 'remember_token' => Str::random(60)// Estudar o remember para implementar
                 ])->save();
-
-                // event(new PasswordReset($user))// TODO: vincular um listener à esse event e mandar um email de sucesso
             }
         );
 

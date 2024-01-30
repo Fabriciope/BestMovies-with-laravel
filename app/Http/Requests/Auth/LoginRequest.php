@@ -32,12 +32,10 @@ class LoginRequest extends FormRequest
 
     public function authenticate(): void
     {
-        //TODO: implementar o remember
         if(! Auth::attempt($this->validated())) {
-            // TODO: estudar o rateLimit
             $this->flashOnly(['email']);
             throw ValidationException::withMessages([
-                'error' => 'Invalid credentials'// TODO: quando for implementar as flashMessages verificar se ha erros
+                'error' => 'Invalid credentials'
             ]);
         }
 

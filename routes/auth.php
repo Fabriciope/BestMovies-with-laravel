@@ -34,11 +34,9 @@ Route::middleware('guest')
 
 Route::middleware('auth')
     ->group(function () {
-        // TODO: mostrar mensagem, indicando que ele não tem permissão para fazer a ação anterior, caso tente fazer algo que precise ter o email verificado.
         Route::get('/verify-email', [VerifyEmailController::class, 'emailVerificationNotice'])
             ->name('verification.notice');
 
-        /* TODO: quando o usuário clicar no link enviado pelo email ele será direcionado para esta rota, que está com o middleware "signed". Caso o link esteja com o assinatura inválida, mostrar uma mensagem de "link inválido ou expirado", e dar a possibilidade dele pedir o reenvio do email */
         Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verifyEmail'])
             ->middleware('signed')->name('verification.verify');
 

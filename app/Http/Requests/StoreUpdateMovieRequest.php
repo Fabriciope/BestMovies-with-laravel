@@ -25,7 +25,7 @@ class StoreUpdateMovieRequest extends FormRequest
     {
         $rules = [
             'title' => ['required', 'string', 'unique:movies,title'],
-            'category_id' => ['required', 'integer'], // TODO: digits_between de quantas categoriaas teem
+            'category_id' => ['required', 'integer'],
             'synopsis' => ['required', 'string'],
             'hours' => ['required', 'integer', 'between:0,10'],
             'minutes' => ['integer', 'between:0,60'],

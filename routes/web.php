@@ -21,7 +21,6 @@ Route::middleware('auth')
         Route::post('/user/update', [ProfileController::class, 'update'])
             ->name('user.update');
 
-        // TODO: mostrar mensagem caso o usuário ainda não possua nenhum filme publicado
         Route::get('/profile/dashboard', [ProfileController::class, 'dashboard'])
             ->name('profile.dashboard');
     });

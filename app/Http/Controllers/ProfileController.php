@@ -30,10 +30,12 @@ class ProfileController extends Controller
     {
         $updatedUser = $this->service->updateProfile($request);
         if(! $updatedUser instanceof User) {
-            return back(); // redirecionar com erros
+            session()->flash('warning', 'Something is wrong.');
+            return back();
         }
 
-        return redirect()->route('profile.index'); // redirecionar com sucesso
+        session()->flash('success', 'Updated profile.');
+        return redirect()->route('profile.index');
     }
 
     public function dashboard(Request $request)

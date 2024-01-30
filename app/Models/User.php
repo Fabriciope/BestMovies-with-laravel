@@ -33,6 +33,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Movie::class, 'user_id', 'id');
     }
-
-    // TODO: implementar a função isVerified() para usar no front
 }

@@ -16,7 +16,6 @@ use Tests\TestCase;
 
 use function Laravel\Prompts\text;
 
-// TODO: toda vez que um comentário for feito, notificar quem registrou o filme
 class MovieServiceTest extends TestCase
 {
     use WithFaker;

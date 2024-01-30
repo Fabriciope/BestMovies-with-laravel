@@ -12,7 +12,6 @@ class WebController extends Controller
     public function home()
     {
         $movieRepository = new MovieRepository;
-        $movieService = new MovieService($movieRepository);
 
         $categories = (new CategoryRepository)->getAll();
         $moviesByCategory = array();
@@ -28,9 +27,6 @@ class WebController extends Controller
                 }
             }
         }
-
-        // TODO: pegar os últimos 20 filmes cadastrados
-        // $newMovies = 
 
         return view('home', [
             'moviesByCategory' => $moviesByCategory,

@@ -21,8 +21,8 @@ class VerifyEmailController extends Controller
     {
         $request->fulfill();
 
-        return redirect()
-            ->route('profile.index');// redirecionar com uma mensagem de sucesso
+        session()->flash('warning', 'Verified account');
+        return redirect()->route('profile.index');
     }
 
     public function sendVerificationEmail(Request $request)
@@ -33,7 +33,7 @@ class VerifyEmailController extends Controller
 
         $request->user()->sendEmailVerificationNotification();
 
-        return redirect()// TODO: redirecionar com uma flash message 
-            ->route('profile.index');
+        session()->flash('warning', 'Email sent');
+        return redirect()->route('profile.index');
     }
 }

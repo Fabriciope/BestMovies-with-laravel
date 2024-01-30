@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <link rel="stylesheet" href="{{ asset('assets/css/flash-messages.css') }}">
+
     <title>{{ $title ?? 'pegar do .env' }}</title>
 </head>
 
 <body class="bg-slate-900">
+
+    <x-flash-messages/>
+
     <header class="mb-8">
         <div class="container mx-auto px-2 py-4 flex justify-between items-center">
             <div class="w-[130px]">

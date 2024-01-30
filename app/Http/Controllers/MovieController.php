@@ -33,14 +33,12 @@ class MovieController extends Controller
         $createdMovie = $this->service->create($request);
         if (!$createdMovie) {
             dd("error create movie");
+            session()->flash('error', 'Error creating movie.');
             return back();
-            // TODO: redirecionar com flash messages
         }
-
-        return redirect()
-            ->route('profile.dashboard');
-        //TODO: redirecionar com flashmessages (filme {$createdMovie->title} criado com sucesso)
-
+        
+        session()->flash('success', "{$createdMovie->title} created");
+        return redirect()->route('profile.dashboard');
     }
 
     public function show(int|string $id)
@@ -66,11 +64,11 @@ class MovieController extends Controller
 
         $updatedMovie = $this->service->update($request, $movie->id);
         if ($updatedMovie === false) {
-            // TODO: msg - something is wrong
+            session()->flash('warning', 'something is wrong.');
             return back();
         }
 
-        // TODO: msg - "updated movie {$updatedMovie->title}"
+        session()->flash('success', "Updated movie {$updatedMovie->title}");
         return redirect()->route('profile.dashboard');
     }
 
@@ -80,7 +78,7 @@ class MovieController extends Controller
 
         $this->service->delete($movie->id);
 
-        // TODO: mensagem de sucesso;
+        session()->flash('success', 'Successfully deleted movie');
         return back();
     }
 
@@ -94,7 +92,7 @@ class MovieController extends Controller
         
         (new AssessmentRepository)->store($dto);
 
-        //TODO: with flashMessages
+        session()->flash('success', 'Comment made');
         return back();
     }
 }

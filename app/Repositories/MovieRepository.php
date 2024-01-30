@@ -11,8 +11,6 @@ class MovieRepository extends AbstractRepository
 {
     protected static string $model = Movie::class;
 
-
-    // TODO: testar
     public function getAllWithRating(?array $filter = null): array
     {
         $foundMovies =  self::getModel()
